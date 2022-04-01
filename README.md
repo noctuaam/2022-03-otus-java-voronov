@@ -1,2 +1,6 @@
-# 2022-03-otus-java-voronov
-Otus java professional courses
+Воронов Александр Антонович
+### Группа 2022-03
+
+### Структура
+hw01-gradle - Подготовка к курсу. ДЗ
+
