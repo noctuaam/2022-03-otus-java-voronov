@@ -24,6 +24,13 @@ allprojects {
     dependencyManagement {
         dependencies {
             dependency "com.google.guava:guava:${Versions.guava}"
+            dependency "org.junit.jupiter:junit-jupiter-api:${Versions.junit}"
+            dependency "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
+            dependency "org.assertj:assertj-core:${Versions.assertjCore}"
+            dependency "org.mockito:mockito-core:${Versions.mockito}"
+            dependency "org.mockito:mockito-junit-jupiter:${Versions.mockito}"
+
         }
     }
 }
+
