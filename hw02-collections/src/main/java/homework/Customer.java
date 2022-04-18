@@ -49,11 +49,7 @@ public class Customer  implements Comparable<Customer>,Cloneable{
 
         Customer customer = (Customer) o;
 
-        if (id != customer.id){
-            return false;
-        }else{
-            return true;
-        }
+        return id == customer.id;
     }
 
     @Override
@@ -68,10 +64,7 @@ public class Customer  implements Comparable<Customer>,Cloneable{
     }
 
     @Override
-    public Customer clone() {
-        try{
+    public Customer clone() throws CloneNotSupportedException{
             return (Customer) super.clone();
-        }catch (CloneNotSupportedException ignored){}
-        return null;
     }
 }
