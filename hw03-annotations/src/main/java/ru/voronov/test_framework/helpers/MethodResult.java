@@ -7,6 +7,7 @@ public class MethodResult {
 
     private final State state;
     private final String methodName;
+    private String message;
 
     public MethodResult(State state, String methodName) {
         this.state = state;
@@ -36,6 +37,8 @@ public class MethodResult {
             resultString.append(this.methodName)
                     .append(": Статус = ")
                     .append(this.state)
+                    .append(this.message != null ? " Сообщение: " : "")
+                    .append(this.message != null ? this.message : "")
                     .append("\n");
         return resultString.toString();
     }
@@ -48,4 +51,8 @@ public class MethodResult {
         return this.state == State.SUCCESS;
     }
 
+    public MethodResult setMessage(String message) {
+        this.message = message;
+        return this;
+    }
 }

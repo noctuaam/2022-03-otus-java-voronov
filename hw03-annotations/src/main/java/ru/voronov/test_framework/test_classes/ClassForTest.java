@@ -7,24 +7,27 @@ import ru.voronov.test_framework.annotations.Test;
 /**
  * @author Aleksandr Voronov
  */
-public class TestClassWithBeforeError {
+public class ClassForTest {
+
+    private int i = 0;
 
     @Before
     public void beforeMethod(){
-        if(true){
-            throw new RuntimeException("Ошибка в @Before методе!!");
-        }
         System.out.println("beforeMethod");
+        i++;
     }
+
 
     @Test
     public void testMethod(){
         System.out.println("testMethod");
+        assert (i==1);
     }
 
     @After
     public void afterMethod(){
         System.out.println("afterMethod");
+        i = 0;
     }
 
 }

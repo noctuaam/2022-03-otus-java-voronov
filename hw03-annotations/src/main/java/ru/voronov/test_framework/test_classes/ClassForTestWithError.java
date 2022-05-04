@@ -7,24 +7,20 @@ import ru.voronov.test_framework.annotations.Test;
 /**
  * @author Aleksandr Voronov
  */
-public class TestClassWithError {
+public class ClassForTestWithError {
+
+    private int i = 1;
 
     @Before
     public void beforeMethod(){
         System.out.println("beforeMethod");
+        i--;
     }
 
     @Test
     public void testMethod(){
-        if(true){
-            throw new RuntimeException("Ошибка в @Test методе!!");
-        }
+        double divideByZero = 6 / i;
         System.out.println("testMethod");
-    }
-
-    @Test
-    public void testMethod2(){
-        System.out.println("testMethod2");
     }
 
     @After
