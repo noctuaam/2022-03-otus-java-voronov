@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 /**
  * @author Aleksandr Voronov
  */
-public record ClassResult(Class<?> clazz,
-                          List<MethodResult> results) {
+public record TestResult(Class<?> clazz,
+                         List<MethodResult> results) {
 
     @Override
     public String toString() {

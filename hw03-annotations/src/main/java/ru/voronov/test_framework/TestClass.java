@@ -3,7 +3,7 @@ package ru.voronov.test_framework;
 import ru.voronov.test_framework.annotations.After;
 import ru.voronov.test_framework.annotations.Before;
 import ru.voronov.test_framework.annotations.Test;
-import ru.voronov.test_framework.helpers.ClassResult;
+import ru.voronov.test_framework.helpers.TestResult;
 import ru.voronov.test_framework.helpers.MethodResult;
 
 import java.lang.annotation.Annotation;
@@ -28,7 +28,7 @@ public class TestClass {
         clazz = Class.forName(className);
     }
 
-    public ClassResult test() throws InvocationTargetException, IllegalAccessException {
+    public TestResult test() throws InvocationTargetException, IllegalAccessException {
 
         List<Method> beforeMethods = getMethodsWithAnnotation(Before.class);
         List<Method> afterMethods = getMethodsWithAnnotation(After.class);
@@ -47,7 +47,7 @@ public class TestClass {
                 invokeMethods(afterMethods);
             }
         }
-       return new ClassResult(clazz,methodResults);
+       return new TestResult(clazz,methodResults);
     }
 
 
