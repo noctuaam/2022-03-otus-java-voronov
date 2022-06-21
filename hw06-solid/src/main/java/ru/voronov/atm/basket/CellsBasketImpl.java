@@ -15,7 +15,7 @@ public class CellsBasketImpl implements CellsBasket{
             Comparator.reverseOrder()));
 
     //купюры которым не нашлось места в ячейках
-    private final Collection<Banknote> undefinedBanknotes = new ArrayList<>();
+    private final List<Banknote> undefinedBanknotes = new ArrayList<>();
 
     public CellsBasketImpl(Banknote banknote){
         for(Banknote banknoteN : banknote.valuesList()){
@@ -35,10 +35,11 @@ public class CellsBasketImpl implements CellsBasket{
     /** Проверка баланса */
     @Override
     public int balance(){
-        AtomicInteger balance = new AtomicInteger();
-        cells.forEach(((nominal, cell)
-                -> balance.addAndGet(cell.balance())));
-        return balance.get();
+        int balance = 0;
+        for (Cell cell : cells.values()) {
+            balance += cell.balance();
+        }
+        return balance;
     }
 
     /** Выдача указанной суммы купюрами */
@@ -48,10 +49,9 @@ public class CellsBasketImpl implements CellsBasket{
         if (canGet(amount)) {
             for (Cell cell : cells.values()) {
                 int cnt = Math.min(cell.count(), amount / cell.nominal());
-                if (cnt == 0) continue;
                 banknotes.addAll(cell.getBanknotes(cnt));
                 amount -= cnt * cell.nominal();
-                if (amount == 0) break;
+                if (amount == 0) return banknotes;
             }
         }
         return banknotes;

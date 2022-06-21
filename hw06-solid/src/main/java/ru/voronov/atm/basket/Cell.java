@@ -26,7 +26,7 @@ public class Cell {
      * @throws IllegalArgumentException
      */
     public List<Banknote> getBanknotes(int cnt) throws IllegalArgumentException {
-        if (cnt <= 0 || cnt > banknotes.size()) throw new IllegalArgumentException("Невозможно выдать указанное количество купюр");
+        if (cnt < 0 || cnt > banknotes.size()) throw new IllegalArgumentException("Невозможно выдать указанное количество купюр");
         List<Banknote> res = new ArrayList<>();
         for (int i = 0; i<cnt; i++){
             res.add(getBanknote());

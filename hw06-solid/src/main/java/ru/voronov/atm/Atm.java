@@ -30,9 +30,11 @@ public class Atm {
      * @param amount
      * @return
      */
-    public Collection<Banknote> getCash(int amount) {
-        if (amount <= 0) throw new ImpossibleCashAmmountException("Запрошенная сумма должна быть больше нуля.",amount);
-        Collection<Banknote> banknotes = cellsBasket.getAmount(amount);
+    public List<Banknote> getCash(int amount) {
+        if (amount <= 0){
+            throw new ImpossibleCashAmmountException("Запрошенная сумма должна быть больше нуля.",amount);
+        }
+        List<Banknote> banknotes = cellsBasket.getAmount(amount);
         if (banknotes.size() == 0) throw new ImpossibleCashAmmountException("Не удалось вернуть запрошенную сумму.",amount);
         return banknotes;
     }
