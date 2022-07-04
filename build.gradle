@@ -29,6 +29,10 @@ allprojects {
             dependency "org.assertj:assertj-core:${Versions.assertjCore}"
             dependency "org.mockito:mockito-core:${Versions.mockito}"
             dependency "org.mockito:mockito-junit-jupiter:${Versions.mockito}"
+            dependency "org.glassfish:jakarta.json:${Versions.glassfishJson}"
+            dependency "com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}"
+            dependency "com.fasterxml.jackson.core:jackson-core:${Versions.jackson}"
+            dependency "javax.json:javax.json-api:${Versions.jsonApi}"
 
         }
     }
