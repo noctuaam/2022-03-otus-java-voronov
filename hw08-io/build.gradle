@@ -12,6 +12,7 @@ dependencies {
 
     implementation 'javax.json:javax.json-api'
     implementation 'org.glassfish:jakarta.json'
+    implementation 'com.google.code.gson:gson'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine'
@@ -19,6 +20,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core'
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
+
 }
 
 test {

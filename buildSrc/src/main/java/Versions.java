@@ -6,4 +6,5 @@ public interface Versions {
     String glassfishJson = "2.0.1";
     String jackson = "2.13.3";
     String jsonApi = "1.1.4";
+    String gson = "2.9.0";
 }

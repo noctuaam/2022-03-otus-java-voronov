@@ -1,49 +1,26 @@
 package ru.voronov.dataprocessor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import ru.voronov.model.Measurement;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResourcesFileLoader implements Loader {
 
-    private final ObjectMapper mapper = new ObjectMapper();
-    //String json;
-    private File file;
+    private String json;
 
     public ResourcesFileLoader(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        //json = getResourceFileAsString(fileName);
-        file = new File(classLoader.getResource(fileName).getFile());
+        json = getResourceFileAsString(fileName);
     }
 
     @Override
-    public List<Measurement> load() throws IOException {
+    public List<Measurement> load(){
         //читает файл, парсит и возвращает результат
-        //return mapper.readValue(json, new TypeReference<List<Measurement>>() {});
-        return mapper.readValue(
-                file,
-                new TypeReference<List<Measurement>>(){});
-        //return Arrays.asList(mapper.readValue(json, Measurement[].class));
-        //return mapper.readValue(json, mapper.getTypeFactory().constructCollectionType(List.class, Measurement.class));
-        /*Measurement[] myObjects = mapper.readValue(file, Measurement[].class);
-
-
-        /*JsonNode jsonNode = mapper.readTree(file);
-        jsonNode.
-        String arrayString = jsonNode.get("name").toString();
-        return mapper.readValue(arrayString, new TypeReference<List<Measurement>>() {});*/
-        //return Arrays.asList(mapper.readValue(json, Measurement[].class));
-        //return mapper.readerForListOf(Measurement.class).readValue(file);
-        ///return mapper.readValue(json, new TypeReference<List<Measurement>>(){});
-
+        return new Gson().fromJson(json, new TypeToken<ArrayList<Measurement>>(){}.getType());
     }
 
     public String getResourceFileAsString(String fileName) {
