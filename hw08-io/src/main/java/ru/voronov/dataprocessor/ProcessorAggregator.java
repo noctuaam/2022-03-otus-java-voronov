@@ -11,18 +11,11 @@ public class ProcessorAggregator implements Processor {
     public Map<String, Double> process(List<Measurement> data) {
         //группирует выходящий список по name, при этом суммирует поля value
         return data.stream()
+                .sorted(Comparator.comparing(Measurement::getName))
                 .collect(Collectors.toMap(
-                // ключ - строка
-                e -> e.getName(),
-                // значение - число,
-                // суммируем два поля
-                e -> e.getValue(),
-                // суммируем значения
-                // повторяющихся элементов
-                Double::sum,
-                // имплементация карты
-                // с сортировкой элементов
-                // в порядке добавления
-                LinkedHashMap::new));
+                        Measurement::getName,
+                        Measurement::getValue,
+                        Double::sum,
+                        LinkedHashMap::new));
     }
 }

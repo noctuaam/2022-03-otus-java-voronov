@@ -1,14 +1,18 @@
 package ru.voronov.dataprocessor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.Type;
 import java.util.Map;
 
 public class FileSerializer implements Serializer {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    Gson gson = new Gson();
     private final File file;
 
     public FileSerializer(String fileName) {
@@ -18,6 +22,10 @@ public class FileSerializer implements Serializer {
     @Override
     public void serialize(Map<String, Double> data) throws IOException {
         //формирует результирующий json и сохраняет его в файл
-        mapper.writeValue(file, data);
+        Writer writer = new FileWriter(file);
+        Type type = new TypeToken<Map<String, Double>>(){}.getType();
+        gson.toJson(data,type, writer);
+        writer.close();
+
     }
 }

@@ -13,7 +13,7 @@ public class ResourcesFileLoader implements Loader {
 
     private String json;
 
-    public ResourcesFileLoader(String fileName) {
+    public ResourcesFileLoader(String fileName) throws IOException {
         json = getResourceFileAsString(fileName);
     }
 
@@ -23,11 +23,15 @@ public class ResourcesFileLoader implements Loader {
         return new Gson().fromJson(json, new TypeToken<ArrayList<Measurement>>(){}.getType());
     }
 
-    public String getResourceFileAsString(String fileName) {
+    public String getResourceFileAsString(String fileName) throws IOException {
         InputStream is = getClass().getClassLoader().getResourceAsStream(fileName);
-        if (is != null) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+        try{
+            if (is != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+            }
+        }finally {
+            is.close();
         }
         return null;
     }
