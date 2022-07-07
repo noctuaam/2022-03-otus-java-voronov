@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class FileSerializer implements Serializer {
 
-    Gson gson = new Gson();
+    private Gson gson = new Gson();
     private final File file;
 
     public FileSerializer(String fileName) {
