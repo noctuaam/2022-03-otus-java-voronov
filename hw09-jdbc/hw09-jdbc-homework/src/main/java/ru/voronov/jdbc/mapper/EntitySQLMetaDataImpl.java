@@ -1,58 +1,76 @@
 package ru.voronov.jdbc.mapper;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Aleksandr Voronov
  */
 public class EntitySQLMetaDataImpl implements EntitySQLMetaData{
 
-    private final EntityClassMetaData entityClassMetaData;
+    private final EntityClassMetaData<?> entityClassMetaData;
 
-    public EntitySQLMetaDataImpl(EntityClassMetaData entityClassMetaData){
+    public EntitySQLMetaDataImpl(EntityClassMetaData<?> entityClassMetaData){
         this.entityClassMetaData = entityClassMetaData;
     }
 
     @Override
     public String getSelectAllSql() {
+        List<String> fieldsToSelect = fieldsToString(entityClassMetaData.getAllFields());
         return "select " +
-                String.join(", ", entityClassMetaData.getAllFields()) +
+                String.join(", ", fieldsToSelect) +
                 " from " +
                 entityClassMetaData.getName();
     }
 
     @Override
     public String getSelectByIdSql() {
-        return getSelectAllSql() +
-                "where " +
-                entityClassMetaData.getIdField() +
-                " = ? ";
+        Field idField = entityClassMetaData.getIdField();
+
+        List<String> fieldsToSelect = fieldsToString(entityClassMetaData.getAllFields());
+        return "select " +
+                String.join(", ", fieldsToSelect) +
+                " from " +
+                entityClassMetaData.getName() +
+                " where " +
+                idField.getName() +
+                " = ?";
     }
 
     @Override
     public String getInsertSql() {
+        List<String> fieldsToInsert = fieldsToString(entityClassMetaData.getFieldsWithoutId());
         return "insert into " +
                 entityClassMetaData.getName() +
-                "(" + String.join(", ", entityClassMetaData.getAllFields()) + ") " +
-                "values " + String.join(" :", entityClassMetaData.getAllFields());
+                "(" +
+                String.join(",", fieldsToInsert) +
+                ")" +
+                " values(" +
+                String.join(",", Collections.nCopies(fieldsToInsert.size(), "?")) +
+                ")";
     }
 
     @Override
     public String getUpdateSql() {
-        StringBuilder updateString = new StringBuilder("update " + entityClassMetaData.getName() + "set ");
-        for(Field field : (List<Field>) entityClassMetaData.getFieldsWithoutId()){
-            updateString.append(field.getName())
-                        .append(" = :")
-                        .append(field.getName());
+        Field idField = entityClassMetaData.getIdField();
+        List<String> fieldsToUpdate = fieldsToString(entityClassMetaData.getFieldsWithoutId());
+        for (int i = 0; i < fieldsToUpdate.size(); i++) {
+            String newVal = String.format("%s = ?", fieldsToUpdate.get(i));
+            fieldsToUpdate.set(i, newVal);
         }
+        return "update " +
+                entityClassMetaData.getName() +
+                " set " +
+                String.join(",", fieldsToUpdate) +
+                " where " +
+                idField.getName() +
+                " = ?";
+    }
 
-        updateString.append(" where ")
-                    .append(entityClassMetaData.getIdField())
-                    .append(" = :")
-                    .append(entityClassMetaData.getIdField());
-        return updateString.toString();
+    private List<String> fieldsToString(List<Field> fields){
+        return fields.stream().map(e->e.getName().toLowerCase()).collect(Collectors.toList());//.collect(Collectors.joining(","));
     }
 
 }

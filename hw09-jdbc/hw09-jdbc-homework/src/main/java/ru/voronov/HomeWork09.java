@@ -13,13 +13,14 @@ import ru.otus.crm.service.DbServiceManagerImpl;
 import ru.voronov.jdbc.mapper.*;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 
-public class HomeWork {
-    private static final String URL = "jdbc:postgresql://localhost:5430/demoDB";
+public class HomeWork09 {
+    private static final String URL = "jdbc:postgresql://localhost:5430/demoDB";//49153
     private static final String USER = "usr";
     private static final String PASSWORD = "pwd";
 
-    private static final Logger log = LoggerFactory.getLogger(HomeWork.class);
+    private static final Logger log = LoggerFactory.getLogger(HomeWork09.class);
 
     public static void main(String[] args) {
 // Общая часть
@@ -31,8 +32,7 @@ public class HomeWork {
 // Работа с клиентом
         EntityClassMetaData entityClassMetaDataClient = new EntityClassMetaDataImpl(new Client());
         EntitySQLMetaData entitySQLMetaDataClient = new EntitySQLMetaDataImpl(entityClassMetaDataClient);
-        var dataTemplateClient = new DataTemplateJdbc<Client>(dbExecutor, entitySQLMetaDataClient,entityClassMetaDataClient); //реализация DataTemplate, универсальная
-
+        var dataTemplateClient = new DataTemplateJdbc<Client>(dbExecutor, entitySQLMetaDataClient, entityClassMetaDataClient); //реализация DataTemplate, универсальная
 // Код дальше должен остаться
         var dbServiceClient = new DbServiceClientImpl(transactionRunner, dataTemplateClient);
         dbServiceClient.saveClient(new Client("dbServiceFirst"));
@@ -47,6 +47,11 @@ public class HomeWork {
         EntityClassMetaData entityClassMetaDataManager = new EntityClassMetaDataImpl(new Manager());
         EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
         var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
+
+        var select = entitySQLMetaDataManager.getSelectByIdSql();
+        var select2 = entitySQLMetaDataManager.getSelectAllSql();
+        var insert = entitySQLMetaDataManager.getInsertSql();
+        var update = entitySQLMetaDataManager.getUpdateSql();
 
         var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
         dbServiceManager.saveManager(new Manager("ManagerFirst"));

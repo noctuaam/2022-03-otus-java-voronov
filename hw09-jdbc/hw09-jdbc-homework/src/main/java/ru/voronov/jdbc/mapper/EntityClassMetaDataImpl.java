@@ -19,8 +19,8 @@ public class EntityClassMetaDataImpl<T> implements EntityClassMetaData{
 
     public EntityClassMetaDataImpl(T t){
         clazz = t.getClass();
-        fields = clazz.getFields();
-        name = clazz.getSimpleName();
+        fields = clazz.getDeclaredFields();
+        name = clazz.getSimpleName().toLowerCase();
     }
 
     @Override

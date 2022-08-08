@@ -8,10 +8,8 @@ import ru.otus.crm.model.Client;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.Modifier;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -69,6 +67,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
                 field.setAccessible(true);
                 params.add(field.get(object));
             }
+            //params.add(entityClassMetaData.getIdField());
             return dbExecutor.executeStatement(connection,entitySQLMetaData.getInsertSql(),params);
         } catch (Exception e) {
             throw new DataTemplateException(e);
@@ -77,13 +76,13 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
 
     @Override
     public void update(Connection connection, T object) {
-        //TODO проверить этот метод, перейти к автогенерации ид, перейти к ? в запросах
         try{
             List params = new ArrayList();
             for(Field field : (List<Field>) entityClassMetaData.getFieldsWithoutId()){
                 field.setAccessible(true);
                 params.add(field.get(object));
             }
+            params.add(entityClassMetaData.getIdField().get(object));
             dbExecutor.executeStatement(connection,entitySQLMetaData.getUpdateSql(),params);
         } catch (Exception e) {
             throw new DataTemplateException(e);
@@ -95,6 +94,7 @@ public class DataTemplateJdbc<T> implements DataTemplate<T> {
             var constructor = entityClassMetaData.getConstructor();
             T t = (T) constructor.newInstance();
             for(Field field : (List<Field>) entityClassMetaData.getAllFields()){
+                field.setAccessible(true);
                 field.set(t,rs.getObject(field.getName()));
             }
             return t;
