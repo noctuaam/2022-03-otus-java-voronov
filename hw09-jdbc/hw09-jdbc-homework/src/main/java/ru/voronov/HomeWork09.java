@@ -48,10 +48,7 @@ public class HomeWork09 {
         EntitySQLMetaData entitySQLMetaDataManager = new EntitySQLMetaDataImpl(entityClassMetaDataManager);
         var dataTemplateManager = new DataTemplateJdbc<Manager>(dbExecutor, entitySQLMetaDataManager, entityClassMetaDataManager);
 
-        var select = entitySQLMetaDataManager.getSelectByIdSql();
-        var select2 = entitySQLMetaDataManager.getSelectAllSql();
-        var insert = entitySQLMetaDataManager.getInsertSql();
-        var update = entitySQLMetaDataManager.getUpdateSql();
+
 
         var dbServiceManager = new DbServiceManagerImpl(transactionRunner, dataTemplateManager);
         dbServiceManager.saveManager(new Manager("ManagerFirst"));

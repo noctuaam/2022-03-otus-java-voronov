@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class EntityClassMetaDataImpl<T> implements EntityClassMetaData{
 
-    private Class<?> clazz;
-    private Field[] fields;
-    private String name;
+    private final Class<?> clazz;
+    private final Field[] fields;
+    private final String name;
 
     public EntityClassMetaDataImpl(T t){
         clazz = t.getClass();
