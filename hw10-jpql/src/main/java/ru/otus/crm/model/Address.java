@@ -2,12 +2,15 @@ package ru.otus.crm.model;
 
 import javax.persistence.*;
 
+/**
+ * @author Aleksandr Voronov
+ */
 @Entity
-@Table(name = "addresses")
-public class Address {
+@Table(name = "address")
+public class Address implements Cloneable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private long id;
 
