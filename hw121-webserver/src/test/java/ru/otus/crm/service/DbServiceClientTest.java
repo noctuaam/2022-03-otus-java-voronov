@@ -3,7 +3,7 @@ package ru.otus.crm.service;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.base.AbstractHibernateTest;
-import ru.otus.crm.model.Client;
+import ru.voronov.crm.model.Client;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +16,6 @@ class DbServiceClientTest extends AbstractHibernateTest {
         //given
         var client = new Client("Ivan");
 
-        //when
         //when
         var savedClient = dbServiceClient.saveClient(client);
         System.out.println(savedClient);
