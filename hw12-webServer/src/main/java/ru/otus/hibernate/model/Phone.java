@@ -14,7 +14,7 @@ public class Phone implements Cloneable{
     @Id
     @GeneratedValue(strategy = SEQUENCE)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "number")
     private String number;

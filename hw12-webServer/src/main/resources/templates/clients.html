@@ -21,6 +21,10 @@
     <label>Логин<br/>
         <input type="text" name="login">
     </label>
+    <br/>
+    <label>Пароль<br/>
+        <input type="text" name="password">
+    </label>
     <br/><br/>
     <input type="submit" value="Добавить">
 </form>
@@ -32,6 +36,7 @@
     <tr>
         <td style="width: 50px">Id</td>
         <td style="width: 150px">Имя</td>
+        <td style="width: 150px">Логин</td>
         <td style="width: 100px">Адрес</td>
         <td style="width: 100px">Телефон</td>
     </tr>
@@ -41,6 +46,7 @@
         <tr>
             <td>${item.id}</td>
             <td>${item.name}</td>
+            <td>${item.login}</td>
             <td>${item.address}</td>
             <td>${item.phones}</td>
         </tr>

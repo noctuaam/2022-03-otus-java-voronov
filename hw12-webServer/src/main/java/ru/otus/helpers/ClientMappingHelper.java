@@ -18,16 +18,25 @@ public class ClientMappingHelper {
         if (isNull(client)) {
             return null;
         } else {
-            return Map.of("id", client.getId(),
-                    "name", client.getName(),
-                    "login", client.getLogin(),
-                    "password", client.getPassword(),
+
+            var phones = isNull(client.getPhones()) ? "" :
+                    client.getPhones()
+                            .stream()
+                            .map(Phone::getNumber)
+                            .collect(joining(","));
+
+            Map<String, Object> res =
+            Map.of("id", nonNull(client.getId()) ? client.getId() : "",
+                    "name", nonNull(client.getName()) ? client.getName() : "",
+                    "login", nonNull(client.getLogin()) ? client.getLogin() : "",
+                    "password", nonNull(client.getPassword()) ? client.getPassword() : "",
                     "address", nonNull(client.getAddress()) ? client.getAddress().getStreet() : "",
                     "phones", isNull(client.getPhones()) ? "" :
                                 client.getPhones()
                                     .stream()
                                     .map(Phone::getNumber)
                                     .collect(joining(",")));
+            return res;
         }
     }
 
@@ -35,7 +44,7 @@ public class ClientMappingHelper {
         Client instance = new Client();
 
         instance.setName(request.getParameter("name"));
-        instance.setName(request.getParameter("login"));
+        instance.setLogin(request.getParameter("login"));
         var address = request.getParameter("address");
         instance.setAddress(nonNull(address) ? new Address(null, address) : null);
         var phones = request.getParameter("phone");

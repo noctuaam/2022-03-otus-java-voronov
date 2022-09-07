@@ -12,7 +12,7 @@ public class Address implements Cloneable{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "street")
     private String street;

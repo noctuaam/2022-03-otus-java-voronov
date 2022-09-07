@@ -12,7 +12,6 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public boolean authenticate(String login, String password) {
-
         var client1 = dbServiceClient.findByLogin(login);
         return dbServiceClient.findByLogin(login)
                 .map(client -> client.getPassword().equals(password))

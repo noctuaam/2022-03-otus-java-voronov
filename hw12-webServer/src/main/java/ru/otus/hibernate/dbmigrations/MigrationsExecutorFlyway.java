@@ -18,6 +18,7 @@ public class MigrationsExecutorFlyway {
 
     public void executeMigrations() {
         logger.info("db migration started...");
+        flyway.clean(); //TODO для demo
         flyway.migrate();
         logger.info("db migration finished.");
     }
