@@ -7,4 +7,5 @@ public interface Versions {
     String jackson = "2.13.3";
     String jsonApi = "1.1.4";
     String gson = "2.9.0";
+    String reflections = "0.10.2";
 }
