@@ -7,7 +7,7 @@ public interface Versions {
     String jackson = "2.13.3";
     String jsonApi = "1.1.4";
     String gson = "2.9.0";
-
+    String reflections = "0.10.2";
     String mongodb = "4.4.1";
     String mongodbReactive = "4.4.1";
     String cassandra = "4.13.0";
