@@ -1,6 +1,8 @@
-package ru.otus.crm.model;
+package ru.otus.hibernate.model;
 
 import javax.persistence.*;
+
+import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * @author Aleksandr Voronov
@@ -10,7 +12,7 @@ import javax.persistence.*;
 public class Phone implements Cloneable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = SEQUENCE)
     @Column(name = "id")
     private Long id;
 
@@ -33,6 +35,12 @@ public class Phone implements Cloneable{
             this.id = id;
         }
         this.number = number;
+    }
+
+    public Phone(Long id, String number, Client client) {
+        this.id = id;
+        this.number = number;
+        this.client = client;
     }
 
     public long getId() {
